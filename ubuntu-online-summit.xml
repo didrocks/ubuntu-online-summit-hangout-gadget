@@ -163,6 +163,17 @@ function createStartOverlay(title) {
   var y = 100;
   tools.wrapText(context, title, marge_x, y, maxWidth, lineHeight);
 
+  _setFontConfig(context, 12);
+  context.textAlign = 'left';
+  var y = canvas.height - 100;
+  var musiccredit = ['Music: "Life of Riley" Kevin MacLeod (incompetech.com)',
+                    'Licensed under Creative Commons: By Attribution 3.0',
+                    'http://creativecommons.org/licenses/by/3.0/']
+  for (line of musiccredit) {
+    context.fillText(line, 5, y);
+    y = y + 20;
+  }
+
   return gapi.hangout.av.effects.createImageResource(canvas.toDataURL()).createOverlay();
 }
 
