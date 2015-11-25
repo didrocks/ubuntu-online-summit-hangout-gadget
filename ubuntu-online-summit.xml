@@ -31,6 +31,7 @@
 <div id="token"></div>
 <div id="ho-url"></div>
 <div id="youtube-url"></div>
+<button id="start">Start Overlay</button>
 
 <script>
 
@@ -167,6 +168,9 @@ function onYoutubeLiveReady(youtubeLiveId) {
 
   // We switch the main participant mirror now to avoid surprises
   gapi.hangout.av.setLocalParticipantVideoMirrored(false);
+
+  // TODO: remove, only for debugging purposes
+  document.getElementById('start').addEventListener("click", function() { changeBroadcastingState(true) })
 }
 
 function changeBroadcastingState(isBroadCasting) {
