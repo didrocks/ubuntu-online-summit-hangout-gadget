@@ -76,14 +76,14 @@ tools._fader = function(overlay, starttime, endtime, fading, ondonecb) {
 
 	if (progress < 1) {
 		requestAnimationFrame(function () {
-			tools._fader(overlay, starttime, endtime, fading);
+			tools._fader(overlay, starttime, endtime, fading, ondonecb);
 		})
 	} else {
 	  if (!fading) {
 			overlay.setVisible(false);
 			// TODO: dispose elements
 		}
-	  ondonecb();
+	  ondonecb(overlay);
 	}
 }
 
@@ -171,7 +171,7 @@ function init() {
 					startOverlay = startOverlayImg.createOverlay();
 
 					// start fade-in
-					tools.fadeout(startOverlay, function() {});
+					tools.fadeout(startOverlay, animdone);
         }
       });
 }
