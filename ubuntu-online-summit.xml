@@ -169,7 +169,7 @@ function createStartOverlay(title) {
 
   _setFontConfig(context, 12);
   context.textAlign = 'left';
-  var y = canvas.height - 100;
+  var y = canvas.height - 70;
   var musiccredit = ['Music: "Life of Riley" Kevin MacLeod (incompetech.com)',
                     'Licensed under Creative Commons: By Attribution 3.0',
                     'http://creativecommons.org/licenses/by/3.0/']
@@ -224,12 +224,12 @@ function changeBroadcastingState(isBroadCasting) {
      */
     document.querySelector("#introMusic").play();
 
-    // fadein intro overlay after 3 seconds
+    // fadein intro overlay after 5 seconds
     window.setTimeout(function() {
       tools.fadein(sessionTitleOverlay, function() {});
-    }, 3000);
+    }, 5000);
 
-    window.setTimeout(startEndIntro, 12000);
+    window.setTimeout(startEndIntro, 10000);
   }
   // TODO: delay end broadcast and show up outtro? (if API let us doing that)
 }
