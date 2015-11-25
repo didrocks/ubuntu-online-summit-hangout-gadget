@@ -201,15 +201,22 @@ function changeBroadcastingState(isBroadCasting) {
   if (isBroadCasting) {
     gapi.hangout.onair.setDisplayedParticipantInBroadcast(gapi.hangout.getLocalParticipant().id);
 
-    // show overlay and wait 10s before fading out
+    // show main overlay and wait 10s before fading out
     tools.showOverlay(startOverlay);
-    window.setTimeout(startFadeIntro, 12000);
+
+    // fadein intro overlay after 3 seconds
+    window.setTimeout(function() {
+      tools.fadein(sessionTitleOverlay, function() {});
+    }, 3000);
+
+    window.setTimeout(startEndIntro, 12000);
   }
   // TODO: delay end broadcast and show up outtro? (if API let us doing that)
 }
 
 /* fade out all intro overlays before disposing */
-function startFadeIntro() {
+function startEndIntro() {
+  tools.fadeout(sessionTitleOverlay, freeOverlay);
   tools.fadeout(startOverlay, introDone);
 }
 
