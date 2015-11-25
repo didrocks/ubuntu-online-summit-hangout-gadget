@@ -33,6 +33,10 @@
 <div id="youtube-url"></div>
 <button id="start">Start Overlay</button>
 
+<audio id="introMusic">
+  <source src="https://people.canonical.com/~didrocks/uos/res/intro_uos.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 
 var ANIMATIONTIME = 3000;
@@ -214,6 +218,11 @@ function changeBroadcastingState(isBroadCasting) {
 
     // show main overlay and wait 10s before fading out
     tools.showOverlay(startOverlay);
+
+    /* play music
+     * we can't use the google hangout API for it as it doesn't work as of now with urls. It only supports wav data uri)
+     */
+    document.querySelector("#introMusic").play();
 
     // fadein intro overlay after 3 seconds
     window.setTimeout(function() {
