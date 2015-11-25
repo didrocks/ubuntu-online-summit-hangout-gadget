@@ -217,7 +217,7 @@ function init() {
           irc_chan: '#ubuntu-uos-desktop',
           end_tagline: 'visit us at http://summit.ubuntu.com',
         };
-        document.getElementById('token').innerHTML = gapi.hangout.getStartData();
+        document.getElementById('token').innerHTML = config;
         document.getElementById('ho-url').innerHTML = gapi.hangout.getHangoutUrl();
         gapi.hangout.onair.onYouTubeLiveIdReady.add(onYoutubeLiveReady);
 
