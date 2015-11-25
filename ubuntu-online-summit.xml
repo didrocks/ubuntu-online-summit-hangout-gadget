@@ -165,33 +165,33 @@ function introDone(overlay) {
   // return for local participant to the expected mirroring status
   gapi.hangout.av.setLocalParticipantVideoMirrored(true);
   gapi.hangout.onair.clearDisplayedParticipantInBroadcast()
-
 }
 
 function init() {
   gapi.hangout.onApiReady.add(
-      function(eventObj) {
-        if (eventObj.isApiReady) {
-          // add all functionalities to the broadcaster as he's the one who will set everything and starts the video
-          if (!gapi.hangout.getLocalParticipant().isBroadcaster) {
-            return ;
-          }
-
-          config = JSON.parse(gapi.hangout.getStartData()) || {
-            token : 'example_token',
-            summit_title: 'Ubuntu Online Summit Oct 2015',
-            irc_chan: '#ubuntu-uos-desktop-example'
-          };
-          document.getElementById('token').innerHTML = gapi.hangout.getStartData();
-          document.getElementById('ho-url').innerHTML = gapi.hangout.getHangoutUrl();
-          gapi.hangout.onair.onYouTubeLiveIdReady.add(onYoutubeLiveReady);
-
-
-          // create start overlays
-          var startOverlayImg = gapi.hangout.av.effects.createImageResource(createMainOverlay('Welcome fdsfds fdsoifjsdofidjs fodsijfoisd jfosd fsdoijfsd ofoids fiods foidsjf iods fiosd fods ofi dsoif dsofidjs oifjsdiof dsoi fdsoi foisd jfids fiods fio dsf fdsfdsfdsfdsfs fdsifojdsiodfsto Ubuntu UOS!'));
-          startOverlay = startOverlayImg.createOverlay();
+    function(eventObj) {
+      if (eventObj.isApiReady) {
+        // add all functionalities to the broadcaster as he's the one who will set everything and starts the video
+        if (!gapi.hangout.getLocalParticipant().isBroadcaster) {
+          return;
         }
-      });
+
+        config = JSON.parse(gapi.hangout.getStartData()) || {
+          token : 'example_token',
+          event_title: 'Ubuntu Online Summit Nov 2015',
+          irc_chan: '#ubuntu-uos-desktop',
+          end_tagline: 'visit us at http://summit.ubuntu.com',
+        };
+        document.getElementById('token').innerHTML = gapi.hangout.getStartData();
+        document.getElementById('ho-url').innerHTML = gapi.hangout.getHangoutUrl();
+        gapi.hangout.onair.onYouTubeLiveIdReady.add(onYoutubeLiveReady);
+
+
+        // create start overlays
+        var startOverlayImg = gapi.hangout.av.effects.createImageResource(createMainOverlay('Welcome fdsfds fdsoifjsdofidjs fodsijfoisd jfosd fsdoijfsd ofoids fiods foidsjf iods fiosd fods ofi dsoif dsofidjs oifjsdiof dsoi fdsoi foisd jfids fiods fio dsf fdsfdsfdsfdsfs fdsifojdsiodfsto Ubuntu UOS!'));
+        startOverlay = startOverlayImg.createOverlay();
+      }
+  });
 }
 
 // Wait for gadget to load.
