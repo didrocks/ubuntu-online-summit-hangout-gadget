@@ -246,6 +246,7 @@ function init() {
           token : 'example_token',
           event_title: 'Ubuntu Online Summit Nov 2015',
           irc_chan: '#ubuntu-uos-desktop',
+          hangout_topic: 'Update to bluez 5.1',
           end_tagline: 'visit us at http://summit.ubuntu.com',
         };
         document.getElementById('token').innerHTML = config;
@@ -254,7 +255,10 @@ function init() {
 
         // create start overlays
         startOverlay = createStartOverlay(config.event_title);
-        sessionTitleOverlay = createSessionOverlay(gapi.hangout.getTopic(), config.irc_chan);
+        /* we can't use gapi.hangout.getTopic() which will work even if the user changed the topic as the API returns
+           nothing (https://code.google.com/p/google-plus-platform/issues/detail?id=956).
+           Use the parameter then. */
+        sessionTitleOverlay = createSessionOverlay(config.hangout_topic, config.irc_chan);
       }
   });
 }
