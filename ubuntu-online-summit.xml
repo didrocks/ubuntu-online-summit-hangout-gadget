@@ -96,7 +96,7 @@ tools.showOverlay = function(overlay) {
 }
 
 tools.fadein = function(overlay, ondonecb) {
-  showOverlay(overlay);
+  tools.showOverlay(overlay);
   now = (new Date()).getTime();
   this._fader(overlay, now, now+ANIMATIONTIME, true, ondonecb);
 }
@@ -133,8 +133,16 @@ function loadUbuntuIcon() {
   return logo;
 }
 
-/* create the main overlay containing logo and UOS title.
-   This is used in start and end overlays */
+/* set font config in canvas context */
+function _setFontConfig(context, size) {
+  context.font = size + 'pt Ubuntu';
+  context.lineWidth = 6;
+  context.fillStyle = '#FFF';
+  context.fillColor = '#FFF';
+  context.textBaseline = 'center';
+}
+
+/* create the main overlay containing logo and UOS title used as a start overlay */
 function createStartOverlay(title) {
   var canvas = _createFullScreenCanvas();
   var context = canvas.getContext('2d');
@@ -147,16 +155,12 @@ function createStartOverlay(title) {
   context.drawImage(logo, canvas.width / 2 - logo.width / 2, canvas.height / 2 - logo.height / 2);
 
   // UOS title
-  context.font = '32pt Ubuntu';
-  var lineHeight = 40;
-  context.lineWidth = 6;
-  context.fillStyle = '#FFF';
-  context.fillColor = '#FFF';
-  context.textBaseline = 'center';
+  _setFontConfig(context, 40);
+  var lineHeight = 48;
   var maxWidth = 900;
-  var x = (canvas.width - maxWidth) / 2;
-  var y = 60;
-  tools.wrapText(context, title, x, y, maxWidth, lineHeight);
+  var marge_x = (canvas.width - maxWidth) / 2;
+  var y = 100;
+  tools.wrapText(context, title, marge_x, y, maxWidth, lineHeight);
 
   return gapi.hangout.av.effects.createImageResource(canvas.toDataURL()).createOverlay();
 }
