@@ -170,8 +170,11 @@ function init() {
   gapi.hangout.onApiReady.add(
       function(eventObj) {
         if (eventObj.isApiReady) {
-          /*document.getElementById('showParticipants')
-            .style.visibility = 'visible';*/
+          // add all functionalities to the broadcaster as he's the one who will set everything and starts the video
+          if (!gapi.hangout.getLocalParticipant().isBroadcaster) {
+            return ;
+          }
+
           config = JSON.parse(gapi.hangout.getStartData()) || {
             token : 'example_token',
             summit_title: 'Ubuntu Online Summit Oct 2015',
