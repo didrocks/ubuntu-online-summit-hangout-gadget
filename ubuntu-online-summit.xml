@@ -36,6 +36,8 @@
 
 var ANIMATIONTIME = 3000;
 
+var config = {};
+
 var tools = {};
 tools.wrapText = function (context, text, x, y, maxWidth, lineHeight) {
 	var words = text.split(' ');
@@ -140,12 +142,22 @@ function onYoutubeLiveReady(youtubeLiveId) {
 	document.getElementById('youtube-url').innerHTML = youtubeLiveId.youTubeLiveId;
 }
 
+function animdone(overlay) {
+  console.log("done")
+}
+
 function init() {
   gapi.hangout.onApiReady.add(
       function(eventObj) {
         if (eventObj.isApiReady) {
           /*document.getElementById('showParticipants')
             .style.visibility = 'visible';*/
+          config = JSON.parse(gapi.hangout.getStartData()) || {
+            token : 'example_token',
+            summit_title: 'Ubuntu Online Summit Oct 2015',
+            irc_chan: '#ubuntu-uos-desktop-example'
+          };
+					console.log(config)
 					document.getElementById('token').innerHTML = gapi.hangout.getStartData();
 					document.getElementById('ho-url').innerHTML = gapi.hangout.getHangoutUrl();
 					gapi.hangout.onair.onYouTubeLiveIdReady.add(onYoutubeLiveReady);
