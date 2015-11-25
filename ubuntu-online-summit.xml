@@ -35,6 +35,7 @@
 <script>
 
 var ANIMATIONTIME = 3000;
+var startOverlay = null;
 
 var config = {};
 
@@ -140,10 +141,29 @@ function createMainOverlay(string) {
 
 function onYoutubeLiveReady(youtubeLiveId) {
 	document.getElementById('youtube-url').innerHTML = youtubeLiveId.youTubeLiveId;
+	// TODO: send all data to the server (broadcast url, hangout url, token)
+	onBroadcastingChanged.add(changeBroadcastingState)
+
+	// We switch the main participant mirror now to avoid surprises
+	gapi.hangout.av.setLocalParticipantVideoMirrored(false);
 }
 
-function animdone(overlay) {
-  console.log("done")
+function changeBroadcastingState(isBroadcasting) {
+	if (isBroadCasting) {
+		gapi.hangout.onair.setDisplayedParticipantInBroadcast()
+
+		// start fade-in
+		tools.fadein(startOverlay, introDone);
+
+	}
+	// TODO: delay end broadcast and show up outtro? (if API let us doing that)
+}
+
+function introDone(overlay) {
+	// return for local participant to the expected mirroring status
+	gapi.hangout.av.setLocalParticipantVideoMirrored(true);
+	gapi.hangout.onair.clearDisplayedParticipantInBroadcast()
+
 }
 
 function init() {
@@ -162,16 +182,10 @@ function init() {
 					document.getElementById('ho-url').innerHTML = gapi.hangout.getHangoutUrl();
 					gapi.hangout.onair.onYouTubeLiveIdReady.add(onYoutubeLiveReady);
 
-					// TODO: set it back to true once the canvas is destroyed.
-					// TODO: focus him
-					gapi.hangout.av.setLocalParticipantVideoMirrored(false);
 
-					// create overlays
+					// create start overlays
 					var startOverlayImg = gapi.hangout.av.effects.createImageResource(createMainOverlay('Welcome fdsfds fdsoifjsdofidjs fodsijfoisd jfosd fsdoijfsd ofoids fiods foidsjf iods fiosd fods ofi dsoif dsofidjs oifjsdiof dsoi fdsoi foisd jfids fiods fio dsf fdsfdsfdsfdsfs fdsifojdsiodfsto Ubuntu UOS!'));
 					startOverlay = startOverlayImg.createOverlay();
-
-					// start fade-in
-					tools.fadeout(startOverlay, animdone);
         }
       });
 }
