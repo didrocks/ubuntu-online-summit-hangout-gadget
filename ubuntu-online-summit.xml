@@ -37,6 +37,7 @@
 
 var ANIMATIONTIME = 3000;
 var startOverlay = null;
+var sessionTitleOverlay = null;
 
 var config = {};
 
@@ -165,6 +166,25 @@ function createStartOverlay(title) {
   return gapi.hangout.av.effects.createImageResource(canvas.toDataURL()).createOverlay();
 }
 
+/* create session title and IRC channel (+ music credit) overlay */
+function createSessionOverlay(topic, irc_chan) {
+  var canvas = _createFullScreenCanvas();
+  var context = canvas.getContext('2d');
+
+  var maxWidth = 900;
+  _setFontConfig(context, 32);
+  var lineHeight = 32;
+  var marge_x = (canvas.width - maxWidth) / 2;
+  var y = canvas.height / 2 + 200;
+  tools.wrapText(context, topic, marge_x, y, maxWidth, lineHeight);
+
+  _setFontConfig(context, 20);
+  context.textAlign = 'right';
+  context.fillText(irc_chan, canvas.width - marge_x, canvas.height - 25);
+
+  return gapi.hangout.av.effects.createImageResource(canvas.toDataURL()).createOverlay();
+}
+
 function onYoutubeLiveReady(youtubeLiveId) {
   document.getElementById('youtube-url').innerHTML = youtubeLiveId.youTubeLiveId;
   // TODO: send all data to the server (broadcast url, hangout url, token)
@@ -227,7 +247,7 @@ function init() {
 
         // create start overlays
         startOverlay = createStartOverlay(config.event_title);
-        //sessionTitleOverlay =
+        sessionTitleOverlay = createSessionOverlay(gapi.hangout.getTopic(), config.irc_chan);
       }
   });
 }
