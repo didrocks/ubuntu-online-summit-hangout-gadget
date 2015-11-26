@@ -33,10 +33,6 @@
 <div id="youtube-url"></div>
 <button id="start">Start Overlay</button>
 
-<audio id="introMusic">
-  <source src="https://people.canonical.com/~didrocks/uos/res/intro_uos.mp3" type="audio/mpeg">
-</audio>
-
 <script src="https://people.canonical.com/~didrocks/uos/tools.js"></script>
 <script src="https://people.canonical.com/~didrocks/uos/overlays.js"></script>
 <script src="https://people.canonical.com/~didrocks/uos/musics.js"></script>

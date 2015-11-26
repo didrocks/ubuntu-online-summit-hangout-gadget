@@ -4,6 +4,7 @@
 
 var startOverlay = null;
 var sessionTitleOverlay = null;
+var introMusic = null;
 
 var config = {};
 
@@ -28,15 +29,19 @@ function changeBroadcastingState(isBroadCasting) {
     // show main overlay and wait 10s before fading out
     tools.showOverlay(startOverlay);
 
-    /* play music
-     * we can't use the google hangout API for it as it doesn't work as of now with urls. It only supports wav data uri)
-     */
-    document.querySelector('#introMusic').play();
+    // play music
+    introMusic.play({localOnly: false, loop: false});
 
     // fadein intro overlay after 5 seconds
     window.setTimeout(function() {
       tools.fadein(sessionTitleOverlay, function() {});
     }, 5000);
+
+    // dispose intro music after 20s
+    window.setTimeout(function() {
+      // dispose raise an exception in HO API (cannot call pause on undefined).
+      introMusic.dispose();
+    }, 20000);
 
     window.setTimeout(startEndIntro, 10000);
   }
@@ -84,6 +89,8 @@ function init() {
            nothing (https://code.google.com/p/google-plus-platform/issues/detail?id=956).
            Use the parameter then. */
         sessionTitleOverlay = createSessionOverlay(config.hangout_topic, config.irc_chan);
+
+        introMusic = loadIntroMusic();
       }
     });
 }
