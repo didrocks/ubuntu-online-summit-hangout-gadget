@@ -29,21 +29,28 @@ function changeBroadcastingState(isBroadCasting) {
     // show main overlay and wait 10s before fading out
     tools.showOverlay(startOverlay);
 
-    // play music
-    introMusic.play({localOnly: false, loop: false});
-
-    // fadein intro overlay after 5 seconds
+    /* we really "start the show" just a little bit after broadcasting starts to ensure:
+     * 1. the overlay is shown
+     * 2. broadcast can keep up
+     * 3. we don't start right away with the music
+     */
     window.setTimeout(function() {
-      tools.fadein(sessionTitleOverlay, function() {});
-    }, 5000);
+      // play music
+      introMusic.play({localOnly: false, loop: false});
 
-    // dispose intro music after 20s
-    window.setTimeout(function() {
-      // dispose raise an exception in HO API (cannot call pause on undefined).
-      introMusic.dispose();
-    }, 20000);
+      // fadein intro overlay after 5 seconds
+      window.setTimeout(function() {
+        tools.fadein(sessionTitleOverlay, function() {});
+      }, 5000);
 
-    window.setTimeout(startEndIntro, 10000);
+      // dispose intro music after 20s
+      window.setTimeout(function() {
+        // dispose raise an exception in HO API (cannot call pause on undefined).
+        introMusic.dispose();
+      }, 20000);
+
+      window.setTimeout(startEndIntro, 10000);
+    }, 500);
   }
 
   // TODO: delay end broadcast and show up outtro? (if API let us doing that)
